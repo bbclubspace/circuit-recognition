@@ -23,7 +23,7 @@ class Content extends StatelessWidget {
               width: 180,
               backgroundColor: AppColors.firstContainer,
               strokeLeftColor: AppColors.firstStrokeColor,
-              strokeLeftWidth: 4,
+              strokeLeftWidth: 5, image: 'assets/project.png', contentText: 'Projelerim',
             ),
             const SizedBox(width: 20),
             //second container
@@ -32,7 +32,7 @@ class Content extends StatelessWidget {
               width: 180,
               backgroundColor: AppColors.secondContainer,
               strokeRightColor: AppColors.secondStrokeColor,
-              strokeRightWidth: 4,
+              strokeRightWidth: 5, image: 'assets/photo.png', contentText: 'Yeni proje ekle',
             ),
           ],
         ),
@@ -48,7 +48,7 @@ class Content extends StatelessWidget {
               width: 380,
               backgroundColor: AppColors.thirdContainer,
               strokeBottomColor: AppColors.thirdStrokeColor,
-              strokeBottomWidth: 4,
+              strokeBottomWidth: 5, image: 'assets/chatbot.png', contentText: 'AI ile sohbet et',
             ),
           ],
         )

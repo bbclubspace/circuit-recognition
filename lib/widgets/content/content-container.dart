@@ -6,6 +6,9 @@ class ContentContainer extends StatelessWidget {
   final double height;
   final double width;
 
+  final String image;
+  final String contentText;
+
   final Color? strokeTopColor;
   final double? strokeTopWidth;
 
@@ -30,7 +33,7 @@ class ContentContainer extends StatelessWidget {
     this.strokeLeftColor,
     this.strokeLeftWidth,
     this.strokeRightColor,
-    this.strokeRightWidth,
+    this.strokeRightWidth, required this.image, required this.contentText,
   });
 
   @override
@@ -51,6 +54,14 @@ class ContentContainer extends StatelessWidget {
         ),
         // Kenarlık özelliklerini dinamik olarak oluşturuyoruz
         border: _getBorder(),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(image),
+          SizedBox(height: 10),
+          Center(child: Text(contentText,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.white),))
+        ],
       ),
     );
   }
