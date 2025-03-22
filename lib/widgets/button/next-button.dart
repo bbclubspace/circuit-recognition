@@ -1,4 +1,4 @@
-import 'package:circuit_recognition/pages/home-page.dart';
+import 'package:circuit_recognition/pages/login-page.dart';
 import 'package:circuit_recognition/themes/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class NextButton extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       },
       child: Container(
         width: 60,
