@@ -1,4 +1,5 @@
 import 'package:circuit_recognition/themes/themes.dart';
+import 'package:circuit_recognition/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeText extends StatelessWidget {
@@ -11,9 +12,10 @@ class WelcomeText extends StatelessWidget {
     return Text(
       "Hoşgeldin, Emre",
       style: TextStyle(
-          color: AppColors.textColor,
-          fontSize: 30,
-          fontWeight: FontWeight.bold),
+        color: AppColors.textColor,
+        fontSize: Responsive.textSize(context, 3),
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }

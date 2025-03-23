@@ -1,3 +1,4 @@
+import 'package:circuit_recognition/utils/responsive.dart';
 import 'package:circuit_recognition/widgets/welcomeTextAndUserIcon/welcomeText.dart';
 import 'package:flutter/material.dart';
 
@@ -9,13 +10,16 @@ class WelcomeTextAndUserIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(width: 20),
         //Hoşgeldin, Emre
-        WelcomeText(),
-        SizedBox(width: 100),
-        Image.asset("assets/profile-image.png"),
+        const WelcomeText(),
+        Image.asset(
+          "assets/profile-image.png",
+          width: Responsive.containerWidth(context, 15),
+          height: Responsive.containerHeight(context, 8),
+          fit: BoxFit.contain,
+        ),
       ],
     );
   }

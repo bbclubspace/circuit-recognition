@@ -1,10 +1,11 @@
 import 'package:circuit_recognition/themes/themes.dart';
+import 'package:circuit_recognition/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
 class ContentContainer extends StatelessWidget {
   final Color backgroundColor;
-  final double height;
-  final double width;
+  final double heightPercentage;
+  final double widthPercentage;
 
   final String image;
   final String contentText;
@@ -23,8 +24,8 @@ class ContentContainer extends StatelessWidget {
 
   const ContentContainer({
     required this.backgroundColor,
-    required this.height,
-    required this.width,
+    required this.heightPercentage,
+    required this.widthPercentage,
     super.key,
     this.strokeTopColor,
     this.strokeTopWidth,
@@ -33,14 +34,16 @@ class ContentContainer extends StatelessWidget {
     this.strokeLeftColor,
     this.strokeLeftWidth,
     this.strokeRightColor,
-    this.strokeRightWidth, required this.image, required this.contentText,
+    this.strokeRightWidth,
+    required this.image,
+    required this.contentText,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
-      width: width,
+      height: Responsive.containerHeight(context, heightPercentage),
+      width: Responsive.containerWidth(context, widthPercentage),
       decoration: BoxDecoration(
         color: AppColors.secondContainer,
         borderRadius: BorderRadius.circular(10),
@@ -52,15 +55,28 @@ class ContentContainer extends StatelessWidget {
             backgroundColor,
           ],
         ),
-        // Kenarlık özelliklerini dinamik olarak oluşturuyoruz
         border: _getBorder(),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(image),
-          SizedBox(height: 10),
-          Center(child: Text(contentText,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.white),))
+          Image.asset(
+            image,
+            width: Responsive.containerWidth(context, 40),
+            height: Responsive.containerHeight(context, 20),
+            fit: BoxFit.contain,
+          ),
+          SizedBox(height: Responsive.blockSizeVertical(context) * 1),
+          Center(
+            child: Text(
+              contentText,
+              style: TextStyle(
+                fontSize: Responsive.textSize(context, 2),
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ],
       ),
     );
