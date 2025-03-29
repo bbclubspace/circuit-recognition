@@ -15,7 +15,7 @@ class Responsive {
       blockSizeHorizontal(context) * size;
 
   // Responsive padding
-  static EdgeInsets responsivePadding(BuildContext context) =>
+  static EdgeInsets responsivePadding(BuildContext context ) =>
       EdgeInsets.symmetric(
         horizontal: blockSizeHorizontal(context) * 5,
         vertical: blockSizeVertical(context) * 2,
@@ -26,4 +26,4 @@ class Responsive {
       screenWidth(context) * (percentage / 100);
   static double containerHeight(BuildContext context, double percentage) =>
       screenHeight(context) * (percentage / 100);
-} 
+}

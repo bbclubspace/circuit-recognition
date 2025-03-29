@@ -12,45 +12,60 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void goMyProject(){
+      Navigator.pushNamed( context, '/myproject',);
+    }
+
+    void newProject(){
+      Navigator.pushNamed( context, '/newproject',);
+    }
+
+    void chatBot(){
+      Navigator.pushNamed( context, '/chatbot',);
+    }
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 //first container
                 ContentContainer(
-                  heightPercentage: 25,
-                  widthPercentage: 45,
+                  heightPercentage: 23,
+                  widthPercentage: 44,
                   backgroundColor: AppColors.firstContainer,
                   strokeLeftColor: AppColors.firstStrokeColor,
                   strokeLeftWidth: 5,
                   image: 'assets/project.png',
                   contentText: 'Projelerim',
+                  onTap: goMyProject,
                 ),
+                 SizedBox(width: Responsive.blockSizeVertical(context) * 0.9),
                 //second container
                 ContentContainer(
-                  heightPercentage: 25,
-                  widthPercentage: 45,
+                  heightPercentage: 23,
+                  widthPercentage: 44,
                   backgroundColor: AppColors.secondContainer,
                   strokeRightColor: AppColors.secondStrokeColor,
                   strokeRightWidth: 5,
                   image: 'assets/photo.png',
                   contentText: 'Yeni proje ekle',
+                  onTap: newProject,
                 ),
               ],
             ),
             SizedBox(height: Responsive.blockSizeVertical(context) * 1),
             //third container
             ContentContainer(
-              heightPercentage: 25,
+              heightPercentage: 24,
               widthPercentage: 95,
               backgroundColor: AppColors.thirdContainer,
               strokeBottomColor: AppColors.thirdStrokeColor,
               strokeBottomWidth: 5,
               image: 'assets/chatbot.png',
               contentText: 'AI ile sohbet et',
+              onTap: chatBot,
             ),
           ],
         );

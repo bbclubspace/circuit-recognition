@@ -3,7 +3,7 @@ import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/widgets/button/next-button.dart';
 import 'package:circuit_recognition/widgets/onboarding/description-text.dart';
 import 'package:circuit_recognition/widgets/onboarding/onboarding-image.dart';
-import 'package:circuit_recognition/widgets/onboarding/onboarding-text.dart';
+import 'package:circuit_recognition/widgets/text/top-text.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -18,7 +18,7 @@ class WelcomePage extends StatelessWidget {
         children: [
           const SizedBox(height: 100),
           // Başlık
-          OnBoardingText(),
+          TopText(text: "Uygulamamızı tanıyalım"),
           const SizedBox(height: 50),
           // Açıklama
           DescriptionText(),

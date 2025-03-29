@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'package:circuit_recognition/pages/home-page.dart';
 import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/widgets/button/alternatif-login-button.dart';
 import 'package:circuit_recognition/widgets/button/auth-button.dart';
@@ -9,20 +8,21 @@ import 'package:flutter/material.dart';
 import '../widgets/mydivider.dart';
 import '../widgets/text/auth-text.dart';
 import '../widgets/textfield/auth-textfield.dart';
-import 'signup-page.dart';
+
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void onTap(){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> SignupPage()));
-  }
-   void goHome()
-   {
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
-   }
+    void onTap() {
+      Navigator.pushNamed( context, '/signup',);
+    }
+
+    void goHome() {
+      Navigator.pushNamed( context, '/home',);
+    }
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SingleChildScrollView(
@@ -43,7 +43,8 @@ class LoginPage extends StatelessWidget {
               ),
               AuthText(
                 text1: "Hesabın henüz yok mu ?",
-                text2: 'Hesap oluştur', onTap: onTap,
+                text2: 'Hesap oluştur',
+                onTap: onTap,
               ),
               SizedBox(height: 20),
               //TEXTFIELD
@@ -51,9 +52,12 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 8),
               AuthTextField(subText: 'Şifre'),
               SizedBox(height: 8),
-        
+
               //BUTTON
-              AuthButton(buttonText: "Giriş yap", onTap:goHome ,),
+              AuthButton(
+                buttonText: "Giriş yap",
+                onTap: goHome,
+              ),
               SizedBox(height: 15),
               Text(
                 "Şifremi unuttum",
@@ -64,7 +68,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               MyDivider(),
-        
+
               //GOOGLE AND FACEBOOK
               SizedBox(height: 20),
               AlternatifLoginButton(

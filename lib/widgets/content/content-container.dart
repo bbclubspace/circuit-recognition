@@ -22,6 +22,8 @@ class ContentContainer extends StatelessWidget {
   final Color? strokeRightColor;
   final double? strokeRightWidth;
 
+  final Function? onTap;
+
   const ContentContainer({
     required this.backgroundColor,
     required this.heightPercentage,
@@ -37,47 +39,50 @@ class ContentContainer extends StatelessWidget {
     this.strokeRightWidth,
     required this.image,
     required this.contentText,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: Responsive.containerHeight(context, heightPercentage),
-      width: Responsive.containerWidth(context, widthPercentage),
-      decoration: BoxDecoration(
-        color: AppColors.secondContainer,
-        borderRadius: BorderRadius.circular(10),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            AppColors.primaryColor,
-            backgroundColor,
-          ],
-        ),
-        border: _getBorder(),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            image,
-            width: Responsive.containerWidth(context, 40),
-            height: Responsive.containerHeight(context, 20),
-            fit: BoxFit.contain,
+    return InkWell(
+      onTap: () => onTap!(),
+      child: Container(
+        height: Responsive.containerHeight(context, heightPercentage),
+        width: Responsive.containerWidth(context, widthPercentage),
+        decoration: BoxDecoration(
+          color: AppColors.secondContainer,
+          borderRadius: BorderRadius.circular(25),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.primaryColor,
+              backgroundColor,
+            ],
           ),
-          SizedBox(height: Responsive.blockSizeVertical(context) * 1),
-          Center(
-            child: Text(
-              contentText,
-              style: TextStyle(
-                fontSize: Responsive.textSize(context, 2),
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
+          border: _getBorder(),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              image,
+              width: Responsive.containerWidth(context, 15),
+              height: Responsive.containerHeight(context, 15),
+              fit: BoxFit.contain,
+            ),
+            Center(
+              child: Text(
+                contentText,
+                style: TextStyle(
+                  fontSize: Responsive.textSize(context, 4.5),
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

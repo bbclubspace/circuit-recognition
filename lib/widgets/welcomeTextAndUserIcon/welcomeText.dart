@@ -13,7 +13,7 @@ class WelcomeText extends StatelessWidget {
       "Hoşgeldin, Emre",
       style: TextStyle(
         color: AppColors.textColor,
-        fontSize: Responsive.textSize(context, 3),
+        fontSize: Responsive.textSize(context, 7),
         fontWeight: FontWeight.bold,
       ),
     );

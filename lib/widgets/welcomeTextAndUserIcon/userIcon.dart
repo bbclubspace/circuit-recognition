@@ -16,8 +16,8 @@ class WelcomeTextAndUserIcon extends StatelessWidget {
         const WelcomeText(),
         Image.asset(
           "assets/profile-image.png",
-          width: Responsive.containerWidth(context, 15),
-          height: Responsive.containerHeight(context, 8),
+          width: Responsive.containerWidth(context, 10),
+          height: Responsive.containerHeight(context, 10),
           fit: BoxFit.contain,
         ),
       ],

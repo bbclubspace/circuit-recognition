@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-class OnBoardingText extends StatelessWidget {
-  const OnBoardingText({
+class TopText extends StatelessWidget {
+  final String text;
+  const TopText({
     super.key,
+    required this.text
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Text(
-        "Uygulamamızı tanıyalım",
+        text,
         style: TextStyle(
           fontSize: 22,
           fontWeight: FontWeight.bold,
