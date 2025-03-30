@@ -1,6 +1,7 @@
 import 'package:circuit_recognition/pages/content/chat-bot.dart';
 import 'package:circuit_recognition/pages/content/my-project.dart';
-import 'package:circuit_recognition/pages/content/new-project.dart';
+import 'package:circuit_recognition/pages/content/new-project/new-project.dart';
+import 'package:circuit_recognition/pages/content/new-project/result.dart';
 import 'package:circuit_recognition/pages/home-page.dart';
 import 'package:circuit_recognition/pages/login-page.dart';
 import 'package:circuit_recognition/pages/signup-page.dart';
@@ -28,6 +29,7 @@ class MainApp extends StatelessWidget {
         '/myproject': (context) => const MyProject(),
         '/newproject': (context) => const NewProject(),
         '/chatbot': (context) => const ChatBot(),
+        '/new-project-result': (context) => const Result(),
 
       },
       builder: (context, child) {

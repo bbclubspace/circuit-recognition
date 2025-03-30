@@ -2,7 +2,7 @@
 
 import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/utils/responsive.dart';
-import 'package:circuit_recognition/widgets/content/content-container.dart';
+import 'package:circuit_recognition/widgets/container/content-container.dart';
 import 'package:flutter/material.dart';
 
 class Content extends StatelessWidget {

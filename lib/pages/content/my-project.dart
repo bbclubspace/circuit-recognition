@@ -1,6 +1,6 @@
 // ignore_for_file: use_super_parameters
 
-import 'package:circuit_recognition/widgets/content/content-container.dart';
+import 'package:circuit_recognition/widgets/container/content-container.dart';
 import 'package:flutter/material.dart';
 
 import '../../themes/themes.dart';

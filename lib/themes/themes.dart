@@ -42,4 +42,9 @@ class AppColors {
 
   //divider
   static const Color divider = Color(0xFF0E4A67);
+
+  //result text color
+  static const Color resultText = Color(0xFF3CBAFD);
+  static const Color resultContainerBackground = Color(0xFFECECEC);
+  static const Color resultBorder = Color(0xFFC3C3C3);
 }
