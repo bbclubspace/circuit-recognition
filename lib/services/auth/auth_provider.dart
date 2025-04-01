@@ -29,6 +29,8 @@ class CreateAccountProvider with ChangeNotifier {
       notifyListeners();
       return user;
     }
+
+    
   } on FirebaseAuthException catch (e) {
     print("Firebase Hatası: ${e.message}");
   } catch (e) {

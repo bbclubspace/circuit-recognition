@@ -3,8 +3,11 @@
 import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/widgets/button/alternatif-login-button.dart';
 import 'package:circuit_recognition/widgets/button/auth-button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../services/auth/auth_provider.dart';
 import '../widgets/mydivider.dart';
 import '../widgets/text/auth-text.dart';
 import '../widgets/textfield/auth-textfield.dart';
@@ -15,13 +18,29 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passWordController = TextEditingController();
+
+    void onTapLogin() async {
+    String emailValue = emailController.text;
+    String passwordValue = passWordController.text;
+
+    final authProvider = Provider.of<CreateAccountProvider>(context, listen: false);
+    User? user = await authProvider.signInWithEmail(emailValue, passwordValue);
+
+    if (user != null) {
+      // Başarılı giriş durumunda yapılacak işlemler
+      Navigator.pushReplacementNamed(context, "/home");
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Giriş işlemi başarısız!')),
+      );
+    }
+  }
     void onTap() {
       Navigator.pushNamed( context, '/signup',);
     }
 
-    void goHome() {
-      Navigator.pushNamed( context, '/home',);
-    }
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -48,15 +67,15 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               //TEXTFIELD
-              AuthTextField(subText: 'Email'),
+              AuthTextField(subText: 'Email', controller: emailController,),
               SizedBox(height: 8),
-              AuthTextField(subText: 'Şifre'),
+              AuthTextField(subText: 'Şifre', controller: passWordController,),
               SizedBox(height: 8),
 
               //BUTTON
               AuthButton(
                 buttonText: "Giriş yap",
-                onTap: goHome,
+                onTap: onTapLogin,
               ),
               SizedBox(height: 15),
               Text(

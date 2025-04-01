@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
-
-import 'package:circuit_recognition/pages/login-page.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../services/auth/auth_provider.dart';
 import '../themes/themes.dart';
 import '../widgets/button/alternatif-login-button.dart';
 import '../widgets/button/auth-button.dart';
@@ -15,9 +15,51 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void onTap() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passWordController = TextEditingController();
+    TextEditingController retryPassWordController = TextEditingController();
+    TextEditingController nameController = TextEditingController();
+    TextEditingController surnameController = TextEditingController();
+
+    void onTap() async {
+      String nameValue = nameController.text;
+      String surnameValue = surnameController.text;
+      String emailValue = emailController.text;
+      String passwordValue = passWordController.text;
+      String retryPasswordValue = retryPassWordController.text;
+
+      if (passwordValue != retryPasswordValue && passwordValue.length < 8) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content:
+                  Text('Şifreler eşleşmiyor veya şifre 8 karakterden kısa!')),
+        );
+        return;
+      }
+
+      final authProvider =
+          Provider.of<CreateAccountProvider>(context, listen: false);
+      User? user = await authProvider.signUpWithEmail(
+        name: nameValue,
+        surname: surnameValue,
+        email: emailValue,
+        password: passwordValue,
+      );
+
+      if (user != null) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('Kayıt olma işlemi başarıyla tamamlandı!')),
+  );
+
+  Future.delayed(Duration(seconds: 2), () {
+    Navigator.pushNamed(context, "/login");
+  });
+} else {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('Kayıt işlemi başarısız!')),
+  );
+}
+
     }
 
     return Scaffold(
@@ -45,19 +87,37 @@ class SignupPage extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               //TEXTFIELD
-              AuthTextField(subText: 'Email'),
+              AuthTextField(
+                subText: 'Email',
+                controller: emailController,
+              ),
               const SizedBox(height: 8),
-              AuthTextField(subText: 'Ad'),
+              AuthTextField(
+                subText: 'Ad',
+                controller: nameController,
+              ),
               const SizedBox(height: 8),
-              AuthTextField(subText: 'Soyad'),
+              AuthTextField(
+                subText: 'Soyad',
+                controller: surnameController,
+              ),
               const SizedBox(height: 8),
-              AuthTextField(subText: 'Şifre'),
+              AuthTextField(
+                subText: 'Şifre',
+                controller: passWordController,
+              ),
               const SizedBox(height: 8),
-              AuthTextField(subText: 'Şifre onayla'),
+              AuthTextField(
+                subText: 'Şifre onayla',
+                controller: retryPassWordController,
+              ),
               const SizedBox(height: 8),
 
               //BUTTON
-              AuthButton(buttonText: "Giriş yap", onTap: onTap,),
+              AuthButton(
+                buttonText: "Giriş yap",
+                onTap: onTap,
+              ),
               const SizedBox(height: 15),
               MyDivider(),
 

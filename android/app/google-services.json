@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1017112900413",
+    "project_id": "circuitrecognition-da847",
+    "storage_bucket": "circuitrecognition-da847.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017112900413:android:b03a16bb3c377aa61e8b54",
+        "android_client_info": {
+          "package_name": "com.example.circuit_recognition"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVekqAvz6U5s8PXI3hqJYXs-inbERQj8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

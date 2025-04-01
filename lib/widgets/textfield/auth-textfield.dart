@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 class AuthTextField extends StatelessWidget {
   final String subText;
+  final TextEditingController controller;
   const AuthTextField({
     super.key,
-    required this.subText,
+    required this.subText, required this.controller,
   });
 
   @override
@@ -22,6 +23,7 @@ class AuthTextField extends StatelessWidget {
           height: 54,
           width: 348,
           child: TextField(
+            controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
