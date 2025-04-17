@@ -6,11 +6,15 @@ import '../../../widgets/container/result-container.dart';
 import '../../../widgets/text/top-text.dart';
 
 class Result extends StatelessWidget {
-  const Result({Key? key}) : super(key: key);
+  final List<String>? resultList;
+
+  const Result({Key? key, this.resultList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List resultList = ["Ardunio", "LCD ekran", "Direnç", "Led"];
+    void goSaveProject(){
+      Navigator.pushNamed(context, "/save-project");
+    }
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Padding(
@@ -37,9 +41,9 @@ class Result extends StatelessWidget {
             ),
             SizedBox(height: Responsive.blockSizeVertical(context)),
             //results
-            ResultContainer(resultList: resultList),
+            ResultContainer(resultList: resultList ?? []),
             SizedBox(height: Responsive.blockSizeVertical(context) * 20),
-            GoNextButton(onTap: () {})
+            GoNextButton(onTap: goSaveProject)
           ],
         ),
       ),

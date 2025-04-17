@@ -30,9 +30,7 @@ class ResultContainer extends StatelessWidget {
             height: 150,
             child: Container(
               decoration: BoxDecoration(
-                color: index % 2 == 0
-                    ? AppColors.resultContainerBackground
-                    : AppColors.primaryColor,
+                color: AppColors.resultContainerBackground,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: AppColors.resultBorder),
               ),

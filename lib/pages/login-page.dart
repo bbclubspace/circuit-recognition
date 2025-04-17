@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../services/auth/auth_provider.dart';
 import '../widgets/mydivider.dart';
 import '../widgets/text/auth-text.dart';
-import '../widgets/textfield/auth-textfield.dart';
+import '../widgets/textfield/custom-textfield.dart';
 
 
 class LoginPage extends StatelessWidget {
@@ -67,9 +67,9 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               //TEXTFIELD
-              AuthTextField(subText: 'Email', controller: emailController,),
+              CustomTextField(subText: 'Email', controller: emailController,height: 54,width: 348),
               SizedBox(height: 8),
-              AuthTextField(subText: 'Şifre', controller: passWordController,),
+              CustomTextField(subText: 'Şifre', controller: passWordController,height: 54,width: 348,),
               SizedBox(height: 8),
 
               //BUTTON

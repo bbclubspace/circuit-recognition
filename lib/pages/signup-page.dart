@@ -8,7 +8,7 @@ import '../widgets/button/alternatif-login-button.dart';
 import '../widgets/button/auth-button.dart';
 import '../widgets/mydivider.dart';
 import '../widgets/text/auth-text.dart';
-import '../widgets/textfield/auth-textfield.dart';
+import '../widgets/textfield/custom-textfield.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -87,29 +87,34 @@ class SignupPage extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               //TEXTFIELD
-              AuthTextField(
+              CustomTextField(
                 subText: 'Email',
                 controller: emailController,
+                height: 54,width: 348
               ),
               const SizedBox(height: 8),
-              AuthTextField(
+              CustomTextField(
                 subText: 'Ad',
                 controller: nameController,
+                height: 54,width: 348
               ),
               const SizedBox(height: 8),
-              AuthTextField(
+              CustomTextField(
                 subText: 'Soyad',
                 controller: surnameController,
+                height: 54,width: 348
               ),
               const SizedBox(height: 8),
-              AuthTextField(
+              CustomTextField(
                 subText: 'Şifre',
                 controller: passWordController,
+                height: 54,width: 348
               ),
               const SizedBox(height: 8),
-              AuthTextField(
+              CustomTextField(
                 subText: 'Şifre onayla',
                 controller: retryPassWordController,
+                height: 54,width: 348
               ),
               const SizedBox(height: 8),
 

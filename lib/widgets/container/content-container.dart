@@ -1,24 +1,23 @@
-import 'package:circuit_recognition/themes/themes.dart';
-import 'package:circuit_recognition/utils/responsive.dart';
 import 'package:flutter/material.dart';
+
+import '../../themes/themes.dart';
+import '../../utils/responsive.dart';
 
 class ContentContainer extends StatelessWidget {
   final Color backgroundColor;
   final double heightPercentage;
   final double widthPercentage;
-
+  final bool isNetworkImage;
   final String image;
   final String contentText;
+  final bool isNewProjectContainer;
 
   final Color? strokeTopColor;
   final double? strokeTopWidth;
-
   final Color? strokeBottomColor;
   final double? strokeBottomWidth;
-
   final Color? strokeLeftColor;
   final double? strokeLeftWidth;
-
   final Color? strokeRightColor;
   final double? strokeRightWidth;
 
@@ -28,7 +27,10 @@ class ContentContainer extends StatelessWidget {
     required this.backgroundColor,
     required this.heightPercentage,
     required this.widthPercentage,
-    super.key,
+    required this.image,
+    required this.contentText,
+    required this.isNetworkImage,
+    required this.isNewProjectContainer,
     this.strokeTopColor,
     this.strokeTopWidth,
     this.strokeBottomColor,
@@ -37,9 +39,8 @@ class ContentContainer extends StatelessWidget {
     this.strokeLeftWidth,
     this.strokeRightColor,
     this.strokeRightWidth,
-    required this.image,
-    required this.contentText,
-    this.onTap
+    this.onTap,
+    super.key,
   });
 
   @override
@@ -65,12 +66,19 @@ class ContentContainer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              image,
-              width: Responsive.containerWidth(context, 15),
-              height: Responsive.containerHeight(context, 15),
-              fit: BoxFit.contain,
-            ),
+            isNetworkImage
+                ? Image.network(
+                    image,
+                    width: Responsive.containerWidth(context, 31),
+                    height: Responsive.containerHeight(context, 31),
+                    fit: BoxFit.contain,
+                  )
+                : Image.asset(
+                    image,
+                    width: Responsive.containerWidth(context, 15),
+                    height: Responsive.containerHeight(context, 15),
+                    fit: BoxFit.contain,
+                  ),
             Center(
               child: Text(
                 contentText,
@@ -92,17 +100,20 @@ class ContentContainer extends StatelessWidget {
         ? BorderSide(color: strokeTopColor!, width: strokeTopWidth!)
         : null;
 
-    final BorderSide? bottomSide = strokeBottomColor != null && strokeBottomWidth != null
-        ? BorderSide(color: strokeBottomColor!, width: strokeBottomWidth!)
-        : null;
+    final BorderSide? bottomSide =
+        strokeBottomColor != null && strokeBottomWidth != null
+            ? BorderSide(color: strokeBottomColor!, width: strokeBottomWidth!)
+            : null;
 
-    final BorderSide? leftSide = strokeLeftColor != null && strokeLeftWidth != null
-        ? BorderSide(color: strokeLeftColor!, width: strokeLeftWidth!)
-        : null;
+    final BorderSide? leftSide =
+        strokeLeftColor != null && strokeLeftWidth != null
+            ? BorderSide(color: strokeLeftColor!, width: strokeLeftWidth!)
+            : null;
 
-    final BorderSide? rightSide = strokeRightColor != null && strokeRightWidth != null
-        ? BorderSide(color: strokeRightColor!, width: strokeRightWidth!)
-        : null;
+    final BorderSide? rightSide =
+        strokeRightColor != null && strokeRightWidth != null
+            ? BorderSide(color: strokeRightColor!, width: strokeRightWidth!)
+            : null;
 
     if (topSide == null &&
         bottomSide == null &&

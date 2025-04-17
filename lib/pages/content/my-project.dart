@@ -29,8 +29,9 @@ class MyProject extends StatelessWidget {
               backgroundColor: AppColors.firstContainer,
               strokeBottomColor: AppColors.firstStrokeColor,
               strokeBottomWidth: 5,
+              isNewProjectContainer: false,
               image: 'assets/hard-work.png',
-              contentText: 'Hırsızlara karşı alarm sistemi',
+              contentText: 'Hırsızlara karşı alarm sistemi', isNetworkImage: false,
             ),
             ListView(
               shrinkWrap: true,
