@@ -19,7 +19,7 @@ class ChatUserInputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-        padding: const EdgeInsets.only(bottom: 10.0, right: 15, left: 15),
+        padding: const EdgeInsets.only(bottom: 35.0, right: 15, left: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

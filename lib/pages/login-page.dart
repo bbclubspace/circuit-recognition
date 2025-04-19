@@ -6,12 +6,12 @@ import 'package:circuit_recognition/widgets/button/auth-button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:quickalert/quickalert.dart';
 import '../services/auth/auth_provider.dart';
+import '../utils/responsive.dart';
 import '../widgets/mydivider.dart';
 import '../widgets/text/auth-text.dart';
 import '../widgets/textfield/custom-textfield.dart';
-
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -20,27 +20,95 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passWordController = TextEditingController();
-
+    final authProvider =
+        Provider.of<CreateAccountProvider>(context, listen: false);
     void onTapLogin() async {
-    String emailValue = emailController.text;
-    String passwordValue = passWordController.text;
+      String emailValue = emailController.text.trim();
+      String passwordValue = passWordController.text.trim();
 
-    final authProvider = Provider.of<CreateAccountProvider>(context, listen: false);
-    User? user = await authProvider.signInWithEmail(emailValue, passwordValue);
+      if (emailValue.isEmpty || passwordValue.isEmpty) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.warning,
+          title: 'Eksik bilgi',
+          text: 'Lütfen e-posta ve şifre giriniz',
+        );
+        return;
+      }
 
-    if (user != null) {
-      // Başarılı giriş durumunda yapılacak işlemler
-      Navigator.pushReplacementNamed(context, "/home");
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Giriş işlemi başarısız!')),
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.loading,
+        title: 'Yükleniyor...',
+        text: 'Lütfen bekleyin',
+        barrierDismissible: false,
+      );
+      await Future.delayed(const Duration(seconds: 1));
+
+      User? user =
+          await authProvider.signInWithEmail(emailValue, passwordValue);
+
+      Navigator.pop(context);
+
+      if (user != null) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          title: 'Başarılı...',
+          text: 'Anasayfaya yönlendiriliyorsunuz',
+          showConfirmBtn: false,
+        );
+        await Future.delayed(const Duration(seconds: 2));
+        Navigator.pushReplacementNamed(context, "/home");
+      } else {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Hata!',
+          text: 'Giriş işlemi başarısız!',
+        );
+      }
+    }
+
+    void onTap() {
+      Navigator.pushNamed(
+        context,
+        '/signup',
       );
     }
-  }
-    void onTap() {
-      Navigator.pushNamed( context, '/signup',);
-    }
 
+    void loginWithGoogle() async {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.loading,
+        title: 'Yükleniyor...',
+        text: 'Lütfen bekleyin',
+        barrierDismissible: false,
+      );
+
+      await authProvider.signInWithGoogle(context);
+      Navigator.pop(context);
+      final user = authProvider.user;
+
+      if (user != null) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          title: 'Başarılı...',
+          text: 'Anasayfaya yönlendiriliyorsunuz',
+          showConfirmBtn: false,
+        );
+        await Future.delayed(const Duration(seconds: 2));
+        Navigator.pushReplacementNamed(context, "/home");
+      } else {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Hata!',
+          text: 'Giriş işlemi başarısız!',
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -51,7 +119,7 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 125),
+              SizedBox(height: Responsive.blockSizeVertical(context) * 10),
               //TEXT
               Text(
                 "Giriş yap",
@@ -67,9 +135,18 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               //TEXTFIELD
-              CustomTextField(subText: 'Email', controller: emailController,height: 54,width: 348),
+              CustomTextField(
+                  subText: 'Email',
+                  controller: emailController,
+                  height: 54,
+                  width: 348),
               SizedBox(height: 8),
-              CustomTextField(subText: 'Şifre', controller: passWordController,height: 54,width: 348,),
+              CustomTextField(
+                subText: 'Şifre',
+                controller: passWordController,
+                height: 54,
+                width: 348,
+              ),
               SizedBox(height: 8),
 
               //BUTTON
@@ -93,11 +170,22 @@ class LoginPage extends StatelessWidget {
               AlternatifLoginButton(
                 image: 'assets/facebook.png',
                 logintText: 'Facebook ile giriş yap',
+                onTap: () {
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.info,
+                    title: 'Facebook ile giriş',
+                    text:
+                        'Yakın zamanda sizlerle...',
+                    showConfirmBtn: false,
+                  );
+                },
               ),
               SizedBox(height: 15),
               AlternatifLoginButton(
                 image: 'assets/google.png',
                 logintText: 'Google ile giriş yap',
+                onTap: loginWithGoogle,
               )
             ],
           ),

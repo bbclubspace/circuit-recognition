@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:quickalert/quickalert.dart';
 import '../services/auth/auth_provider.dart';
 import '../themes/themes.dart';
+import '../utils/responsive.dart';
 import '../widgets/button/alternatif-login-button.dart';
 import '../widgets/button/auth-button.dart';
 import '../widgets/mydivider.dart';
@@ -20,25 +22,41 @@ class SignupPage extends StatelessWidget {
     TextEditingController retryPassWordController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController surnameController = TextEditingController();
-
+    final authProvider =
+        Provider.of<CreateAccountProvider>(context, listen: false);
     void onTap() async {
       String nameValue = nameController.text;
       String surnameValue = surnameController.text;
       String emailValue = emailController.text;
       String passwordValue = passWordController.text;
       String retryPasswordValue = retryPassWordController.text;
-
-      if (passwordValue != retryPasswordValue && passwordValue.length < 8) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content:
-                  Text('Şifreler eşleşmiyor veya şifre 8 karakterden kısa!')),
+      if (emailValue.isEmpty || passwordValue.isEmpty) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.warning,
+          title: 'Eksik bilgi',
+          text: 'Lütfen e-posta ve şifre giriniz',
         );
         return;
       }
+      if (passwordValue != retryPasswordValue && passwordValue.length < 8) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Hata!',
+          text: 'Şifreler eşleşmiyor veya şifre 8 karakterden kısa!',
+        );
+        return;
+      }
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.loading,
+        title: 'Yükleniyor...',
+        text: 'Lütfen bekleyin',
+        barrierDismissible: false,
+      );
+      await Future.delayed(const Duration(seconds: 1));
 
-      final authProvider =
-          Provider.of<CreateAccountProvider>(context, listen: false);
       User? user = await authProvider.signUpWithEmail(
         name: nameValue,
         surname: surnameValue,
@@ -47,19 +65,58 @@ class SignupPage extends StatelessWidget {
       );
 
       if (user != null) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('Kayıt olma işlemi başarıyla tamamlandı!')),
-  );
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          title: 'Başarılı...',
+          text: 'Anasayfaya yönlendiriliyorsunuz',
+          showConfirmBtn: false,
+        );
 
-  Future.delayed(Duration(seconds: 2), () {
-    Navigator.pushNamed(context, "/login");
-  });
-} else {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('Kayıt işlemi başarısız!')),
-  );
-}
+        Future.delayed(Duration(seconds: 2), () {
+          Navigator.pushNamed(context, "/login");
+        });
+      } else {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Hata!',
+          text: 'Giriş işlemi başarısız!',
+        );
+      }
+    }
 
+    void loginWithGoogle() async {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.loading,
+        title: 'Yükleniyor...',
+        text: 'Lütfen bekleyin',
+        barrierDismissible: false,
+      );
+
+      await authProvider.signInWithGoogle(context);
+      Navigator.pop(context);
+      final user = authProvider.user;
+
+      if (user != null) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          title: 'Başarılı...',
+          text: 'Anasayfaya yönlendiriliyorsunuz',
+          showConfirmBtn: false,
+        );
+        await Future.delayed(const Duration(seconds: 2));
+        Navigator.pushReplacementNamed(context, "/home");
+      } else {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Hata!',
+          text: 'Giriş işlemi başarısız!',
+        );
+      }
     }
 
     return Scaffold(
@@ -71,7 +128,7 @@ class SignupPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 120),
+              SizedBox(height: Responsive.blockSizeVertical(context) * 10),
               //TEXT
               Text(
                 "Hesap oluştur",
@@ -88,34 +145,34 @@ class SignupPage extends StatelessWidget {
               const SizedBox(height: 15),
               //TEXTFIELD
               CustomTextField(
-                subText: 'Email',
-                controller: emailController,
-                height: 54,width: 348
-              ),
+                  subText: 'Email',
+                  controller: emailController,
+                  height: 54,
+                  width: 348),
               const SizedBox(height: 8),
               CustomTextField(
-                subText: 'Ad',
-                controller: nameController,
-                height: 54,width: 348
-              ),
+                  subText: 'Ad',
+                  controller: nameController,
+                  height: 54,
+                  width: 348),
               const SizedBox(height: 8),
               CustomTextField(
-                subText: 'Soyad',
-                controller: surnameController,
-                height: 54,width: 348
-              ),
+                  subText: 'Soyad',
+                  controller: surnameController,
+                  height: 54,
+                  width: 348),
               const SizedBox(height: 8),
               CustomTextField(
-                subText: 'Şifre',
-                controller: passWordController,
-                height: 54,width: 348
-              ),
+                  subText: 'Şifre',
+                  controller: passWordController,
+                  height: 54,
+                  width: 348),
               const SizedBox(height: 8),
               CustomTextField(
-                subText: 'Şifre onayla',
-                controller: retryPassWordController,
-                height: 54,width: 348
-              ),
+                  subText: 'Şifre onayla',
+                  controller: retryPassWordController,
+                  height: 54,
+                  width: 348),
               const SizedBox(height: 8),
 
               //BUTTON
@@ -131,11 +188,21 @@ class SignupPage extends StatelessWidget {
               AlternatifLoginButton(
                 image: 'assets/facebook.png',
                 logintText: 'Facebook ile giriş yap',
+                onTap: () {
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.info,
+                    title: 'Facebook ile giriş',
+                    text: 'Yakın zamanda sizlerle...',
+                    showConfirmBtn: false,
+                  );
+                },
               ),
               const SizedBox(height: 15),
               AlternatifLoginButton(
                 image: 'assets/google.png',
                 logintText: 'Google ile giriş yap',
+                onTap: loginWithGoogle,
               )
             ],
           ),

@@ -52,7 +52,7 @@ class AiChatServices with ChangeNotifier {
           "Content-Type": "application/json",
         },
         body: jsonEncode({
-          "model": "meta-llama/llama-4-maverick:free",
+          "model": "google/gemma-3-12b-it:free",
           "messages": [
             {
               "role": "user",

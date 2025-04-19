@@ -2,6 +2,7 @@ import 'package:circuit_recognition/services/ai/ai-chat-services.dart';
 import 'package:circuit_recognition/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../widgets/chat/chat-buble.dart';
 import '../widgets/textfield/chat-user-input-widget.dart';
@@ -17,6 +18,19 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  @override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.info,
+      title: 'AI chatbot',
+      text: 'Dilediğiniz soruları yapay zeka botumuza sorabilirsiniz...',
+      showConfirmBtn: false,
+    );
+  });
+}
   void scrollDown({bool animated = true}) {
     if (_scrollController.hasClients) {
       final position = _scrollController.position.maxScrollExtent;
@@ -84,3 +98,4 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 }
+

@@ -3,8 +3,10 @@ import 'package:circuit_recognition/widgets/welcomeTextAndUserIcon/welcomeText.d
 import 'package:flutter/material.dart';
 
 class WelcomeTextAndUserIcon extends StatelessWidget {
+  final String name;
   const WelcomeTextAndUserIcon({
     super.key,
+    required this.name,
   });
 
   @override
@@ -13,7 +15,7 @@ class WelcomeTextAndUserIcon extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         //Hoşgeldin, Emre
-        const WelcomeText(),
+        WelcomeText(name:  name,),
         Image.asset(
           "assets/profile-image.png",
           width: Responsive.containerWidth(context, 10),

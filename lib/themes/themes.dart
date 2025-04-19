@@ -53,4 +53,11 @@ class AppColors {
   static const Color chatBubleUser = Color.fromARGB(255, 165, 170, 173);
   static const Color chatBubleAiText = Color.fromARGB(255, 255, 254, 254);
   static const Color chatBubleUserText = Color.fromARGB(255, 255, 255, 255);
+
+  //project-proposal
+  static const Color containerColor = Color(0xFF7C3CAE);
+  static const Color iconButtonColor = Color(0xFFFFFFFF);
+  static const Color descriptionTextColor =Color(0xFFD9D9D9);
+ 
+
 }

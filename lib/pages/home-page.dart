@@ -4,10 +4,36 @@ import 'package:circuit_recognition/utils/responsive.dart';
 import 'package:circuit_recognition/widgets/content/content.dart';
 import 'package:circuit_recognition/widgets/welcomeTextAndUserIcon/userIcon.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+import '../services/auth/auth_provider.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+    String userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  void loadData() async {
+    final provider = Provider.of<CreateAccountProvider>(context, listen: false);
+    await provider.loadUserData();
+    final data = provider.userData;
+    if (data != null && mounted) {
+      setState(() {
+        userName = data['name'] ?? '';
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +47,7 @@ class HomePage extends StatelessWidget {
             children: [
               SizedBox(height: Responsive.blockSizeVertical(context) * 2),
               //anasayfa texti ve kullanıcı iconu
-              const WelcomeTextAndUserIcon(),
+              WelcomeTextAndUserIcon(name: userName,),
               SizedBox(height: Responsive.blockSizeVertical(context) * 3),
               // projelerim,yeniproje,chatbot
               const Expanded(child: Content()),

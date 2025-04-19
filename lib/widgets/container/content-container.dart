@@ -69,14 +69,14 @@ class ContentContainer extends StatelessWidget {
             isNetworkImage
                 ? Image.network(
                     image,
-                    width: Responsive.containerWidth(context, 31),
-                    height: Responsive.containerHeight(context, 31),
+                    width: 275,
+                    height: 275,
                     fit: BoxFit.contain,
                   )
                 : Image.asset(
                     image,
-                    width: Responsive.containerWidth(context, 15),
-                    height: Responsive.containerHeight(context, 15),
+                    width: 60,
+                    height: 60,
                     fit: BoxFit.contain,
                   ),
             Center(

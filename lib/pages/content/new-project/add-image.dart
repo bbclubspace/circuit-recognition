@@ -9,18 +9,19 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../themes/themes.dart';
 import '../../../widgets/container/content-container.dart';
 
-class NewProject extends StatefulWidget {
-  const NewProject({Key? key}) : super(key: key);
+class AddImage extends StatefulWidget {
+  const AddImage({Key? key}) : super(key: key);
 
   @override
-  State<NewProject> createState() => _NewProjectState();
+  State<AddImage> createState() => _NewProjectState();
 }
 
-class _NewProjectState extends State<NewProject> {
+class _NewProjectState extends State<AddImage> {
   final _imagepicker = ImagePicker();
   final List<String> result = [];
   RxString picture = "".obs;
@@ -33,21 +34,43 @@ class _NewProjectState extends State<NewProject> {
     aiServices = Provider.of<AiServices>(context, listen: false);
   }
 
-  void goResult() async {
-    aiServices.setIsResultNotGet(true);
+void goResult() async {
+  aiServices.setIsResultNotGet(true);
 
-    final resultData = await aiServices.uploadImageAi();
-    result.clear();
-    result.addAll(resultData);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Result(resultList: result),
-      ),
-    );
-    aiServices.setIsResultNotGet(false);
+  if(aiServices.isResultNotGet)
+  {
+    QuickAlert.show(
+    context: context,
+    type: QuickAlertType.loading,
+    title: 'Yükleniyor...',
+    text: 'Lütfen bekleyin',
+    barrierDismissible: false,
+  );
   }
+  if(aiServices.imageUrl=="")
+  {
+      QuickAlert.show(
+      context: context,
+      type: QuickAlertType.error,
+      title: 'Hata!',
+      text: 'Resim urlsi alınamadı',
+    );
+  }
+
+  final resultData = await aiServices.uploadImageAi();
+  result.clear();
+  result.addAll(resultData);
+  Navigator.pop(context);
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => Result(resultList: result),
+    ),
+  );
+  
+  aiServices.setIsResultNotGet(false);
+}
+
 
   Future<void> pickImage() async {
     result.clear();
@@ -92,17 +115,7 @@ class _NewProjectState extends State<NewProject> {
                 );
               },
             ),
-            SizedBox(height: Responsive.blockSizeVertical(context) * 10),
-            Consumer<AiServices>(
-              builder: (context, aiServices, _) {
-                return aiServices.isResultNotGet
-                    ? CircularProgressIndicator(
-                        color: AppColors.secondaryColor,
-                        backgroundColor: AppColors.backgroundColor,
-                      )
-                    : SizedBox();
-              },
-            ),
+
             SizedBox(height: Responsive.blockSizeVertical(context) * 20),
             GoNextButton(
               onTap: goResult,
