@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/widgets/button/alternatif-login-button.dart';
 import 'package:circuit_recognition/widgets/button/auth-button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,16 +21,25 @@ class LoginPage extends StatelessWidget {
     TextEditingController passWordController = TextEditingController();
     final authProvider =
         Provider.of<CreateAccountProvider>(context, listen: false);
+
     void onTapLogin() async {
       String emailValue = emailController.text.trim();
       String passwordValue = passWordController.text.trim();
 
+      String? errorMessage;
+      QuickAlertType alertType = QuickAlertType.error;
+
       if (emailValue.isEmpty || passwordValue.isEmpty) {
+        errorMessage = 'Lütfen e-posta ve şifre giriniz';
+        alertType = QuickAlertType.warning;
+      }
+
+      if (errorMessage != null) {
         QuickAlert.show(
           context: context,
-          type: QuickAlertType.warning,
-          title: 'Eksik bilgi',
-          text: 'Lütfen e-posta ve şifre giriniz',
+          type: alertType,
+          title: 'Hata',
+          text: errorMessage,
         );
         return;
       }
@@ -43,8 +51,8 @@ class LoginPage extends StatelessWidget {
         text: 'Lütfen bekleyin',
         barrierDismissible: false,
       );
-      await Future.delayed(const Duration(seconds: 1));
 
+      await Future.delayed(const Duration(seconds: 1));
       User? user =
           await authProvider.signInWithEmail(emailValue, passwordValue);
 
@@ -59,7 +67,11 @@ class LoginPage extends StatelessWidget {
           showConfirmBtn: false,
         );
         await Future.delayed(const Duration(seconds: 2));
-        Navigator.pushReplacementNamed(context, "/home");
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/home",
+          (Route<dynamic> route) => false,
+        );
       } else {
         QuickAlert.show(
           context: context,
@@ -86,9 +98,8 @@ class LoginPage extends StatelessWidget {
         barrierDismissible: false,
       );
 
-      await authProvider.signInWithGoogle(context);
+      User? user = await authProvider.signInWithGoogle(context);
       Navigator.pop(context);
-      final user = authProvider.user;
 
       if (user != null) {
         QuickAlert.show(
@@ -99,19 +110,19 @@ class LoginPage extends StatelessWidget {
           showConfirmBtn: false,
         );
         await Future.delayed(const Duration(seconds: 2));
-        Navigator.pushReplacementNamed(context, "/home");
+        Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
       } else {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
           title: 'Hata!',
-          text: 'Giriş işlemi başarısız!',
+          text: 'Google ile giriş başarısız oldu!',
         );
       }
     }
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 25),
@@ -124,7 +135,7 @@ class LoginPage extends StatelessWidget {
               Text(
                 "Giriş yap",
                 style: TextStyle(
-                    color: AppColors.firstAuthText,
+                    color: Theme.of(context).colorScheme.secondary,
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
@@ -158,7 +169,7 @@ class LoginPage extends StatelessWidget {
               Text(
                 "Şifremi unuttum",
                 style: TextStyle(
-                    color: AppColors.secondAuthText,
+                    color: Theme.of(context).colorScheme.secondary,
                     fontSize: 15,
                     fontWeight: FontWeight.w500),
               ),
@@ -175,8 +186,7 @@ class LoginPage extends StatelessWidget {
                     context: context,
                     type: QuickAlertType.info,
                     title: 'Facebook ile giriş',
-                    text:
-                        'Yakın zamanda sizlerle...',
+                    text: 'Yakın zamanda sizlerle...',
                     showConfirmBtn: false,
                   );
                 },

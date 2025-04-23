@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
-import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/utils/responsive.dart';
 import 'package:circuit_recognition/widgets/content/content.dart';
 import 'package:circuit_recognition/widgets/welcomeTextAndUserIcon/userIcon.dart';
@@ -34,10 +33,14 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
+
+  void goSettingsPage(){
+    Navigator.pushNamed(context, "/settings");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: Responsive.responsivePadding(context),
@@ -47,7 +50,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               SizedBox(height: Responsive.blockSizeVertical(context) * 2),
               //anasayfa texti ve kullanıcı iconu
-              WelcomeTextAndUserIcon(name: userName,),
+              WelcomeTextAndUserIcon(name: userName,onTap: goSettingsPage,),
               SizedBox(height: Responsive.blockSizeVertical(context) * 3),
               // projelerim,yeniproje,chatbot
               const Expanded(child: Content()),

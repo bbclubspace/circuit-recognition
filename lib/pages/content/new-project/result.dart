@@ -1,9 +1,9 @@
 import 'package:circuit_recognition/services/content/content-services.dart';
 import 'package:circuit_recognition/widgets/button/go-next-button.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
-import '../../../themes/themes.dart';
 import '../../../utils/responsive.dart';
 import '../../../widgets/button/project-proposal-button.dart';
 import '../../../widgets/container/result-container.dart';
@@ -28,7 +28,20 @@ class Result extends StatelessWidget {
       Navigator.pushNamed(context, "/save-project");
     }
 void goProjectProposal() async {
-  // 1. Yükleniyor dialogunu göster
+  final validItems = contentServices.updatedResultList.isNotEmpty
+      ? contentServices.updatedResultList
+      : contentServices.resultList;
+
+  if (validItems.isEmpty) {
+    await QuickAlert.show(
+      context: context,
+      type: QuickAlertType.warning,
+      title: 'Eksik Bilgi',
+      text: 'Proje oluşturmak için önce malzeme listesi girilmelidir.',
+    );
+    return;
+  }
+
   QuickAlert.show(
     context: context,
     type: QuickAlertType.loading,
@@ -36,9 +49,9 @@ void goProjectProposal() async {
     text: 'Lütfen bekleyin',
     barrierDismissible: false,
   );
+
   final result = await contentServices.projectProposal();
   Navigator.of(context, rootNavigator: true).pop();
-
   if (result != null) {
     await QuickAlert.show(
       context: context,
@@ -49,7 +62,6 @@ void goProjectProposal() async {
     );
     Navigator.pushNamed(context, "/project-proposal");
     print("Gelen Projeler: ${contentServices.projectProposals}");
-
   } else {
     await QuickAlert.show(
       context: context,
@@ -63,13 +75,21 @@ void goProjectProposal() async {
 
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Ionicons.chevron_back_outline),
+        ),
+        leadingWidth: 80,
+      ),
       body: Padding(
         padding: Responsive.responsivePadding(context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: Responsive.blockSizeVertical(context) * 7),
             Padding(
               padding: const EdgeInsets.only(left: 30),
               child: TopText(text: "Yapay zeka sonuçları"),
@@ -80,7 +100,7 @@ void goProjectProposal() async {
               child: Text(
                 "Malzeme ekle/çıkart",
                 style: TextStyle(
-                  color: AppColors.textColor,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),

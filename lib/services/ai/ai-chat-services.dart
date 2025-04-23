@@ -26,6 +26,7 @@ class AiChatServices with ChangeNotifier {
     notifyListeners();
   }
 
+
   Future<void> sendMessage(String userMessage) async {
     addUserMessage(userMessage);
     addLoadingMessage();

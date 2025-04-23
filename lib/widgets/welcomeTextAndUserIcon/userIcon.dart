@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 
 class WelcomeTextAndUserIcon extends StatelessWidget {
   final String name;
+  final VoidCallback onTap;
   const WelcomeTextAndUserIcon({
     super.key,
     required this.name,
+    required this.onTap
   });
 
   @override
@@ -16,11 +18,14 @@ class WelcomeTextAndUserIcon extends StatelessWidget {
       children: [
         //Hoşgeldin, Emre
         WelcomeText(name:  name,),
-        Image.asset(
-          "assets/profile-image.png",
-          width: Responsive.containerWidth(context, 10),
-          height: Responsive.containerHeight(context, 10),
-          fit: BoxFit.contain,
+        InkWell(
+          onTap: () => onTap(),
+          child: Image.asset(
+            "assets/profile-image.png",
+            width: Responsive.containerWidth(context, 10),
+            height: Responsive.containerHeight(context, 10),
+            fit: BoxFit.contain,
+          ),
         ),
       ],
     );

@@ -8,6 +8,7 @@ class AppColors {
   static const Color textColor = Color(0xFF302E2E);
   static const Color secondTextColor = Color(0xFFA1A1A1);
   static const Color secondaryColor = Color(0xFF202020);
+  static const Color thirdTextColor = Color.fromARGB(255, 68, 68, 68);
   static const Color backgroundColor = Color(0xFFF5F5F5); 
   static const Color errorColor = Color(0xFFB00020);
 
@@ -59,5 +60,41 @@ class AppColors {
   static const Color iconButtonColor = Color(0xFFFFFFFF);
   static const Color descriptionTextColor =Color(0xFFD9D9D9);
  
+static ThemeData lightTheme = ThemeData(
+  brightness: Brightness.light,
+  scaffoldBackgroundColor: AppColors.primaryColor,
+  colorScheme: ColorScheme.light(
+    surface: Colors.white,
+    primary: AppColors.primaryColor,
+    error: AppColors.errorColor,
+    onPrimary: AppColors.textColor,
+    secondary: AppColors.firstAuthText
+  ),
+  textTheme: TextTheme(
+    bodyLarge: TextStyle(color: AppColors.firstAuthText),
+    bodyMedium: TextStyle(color: AppColors.secondAuthText),
+    titleLarge: TextStyle(color: AppColors.textFieldSubText, fontWeight: FontWeight.bold),
+    titleMedium: TextStyle(color: AppColors.textFieldSubText),
+  ),
+);
+
+static ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: AppColors.secondaryColor,
+  colorScheme: ColorScheme.dark(
+    surface: Colors.grey.shade900,
+    primary: AppColors.thirdTextColor,
+    onPrimary: Colors.white,
+    onSecondary: AppColors.chatBubleAiText,
+    error: AppColors.errorColor,
+    secondary: AppColors.authButtonText
+  ),
+  textTheme: TextTheme(
+    bodyLarge: TextStyle(color: Colors.white),
+    bodyMedium: TextStyle(color: AppColors.descriptionTextColor),
+    titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    titleMedium: TextStyle(color: AppColors.firstContainer),
+  ),
+);
 
 }

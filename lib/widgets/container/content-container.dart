@@ -69,8 +69,8 @@ class ContentContainer extends StatelessWidget {
             isNetworkImage
                 ? Image.network(
                     image,
-                    width: 275,
-                    height: 275,
+                    width: 250,
+                    height: 250,
                     fit: BoxFit.contain,
                   )
                 : Image.asset(
@@ -85,7 +85,7 @@ class ContentContainer extends StatelessWidget {
                 style: TextStyle(
                   fontSize: Responsive.textSize(context, 4.5),
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),

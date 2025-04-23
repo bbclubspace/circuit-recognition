@@ -8,12 +8,15 @@ class CustomTextField extends StatelessWidget {
   final bool? issubFixIcon;
   final String? subFixIconPath;
   final TextEditingController controller;
+
   const CustomTextField({
     super.key,
     required this.subText,
     required this.controller,
     required this.height,
-    required this.width,  this.issubFixIcon,  this.subFixIconPath,
+    required this.width,
+    this.issubFixIcon,
+    this.subFixIconPath,
   });
 
   @override
@@ -21,43 +24,66 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          subText,
-          style: TextStyle(fontSize: 14, color: AppColors.textFieldSubText),
-        ),
+        Text(subText,
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? AppColors
+                      .textFieldStroke
+                  : AppColors
+                      .descriptionTextColor,
+            )),
         SizedBox(height: 5),
         SizedBox(
-          height: height, //authta 54 olacak
-          width: width, //authta 348 olacak
+          height: height, //authda 54 olacak
+          width: width, //authda 348 olacak
           child: TextField(
             controller: controller,
             decoration: InputDecoration(
-                 suffixIcon: (issubFixIcon ?? false) && subFixIconPath != null
-      ? Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-            subFixIconPath!, // null olmayacağını garanti ettiğimiz için ! kullanıyoruz
-            width: 24,
-            height: 24,
-          ),
-        )
-      : const SizedBox(),
+              suffixIcon: (issubFixIcon ?? false) && subFixIconPath != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        subFixIconPath!,
+                        width: 24,
+                        height: 24,
+                      ),
+                    )
+                  : const SizedBox(),
               contentPadding:
                   EdgeInsets.symmetric(vertical: height / 4, horizontal: 12),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide:
-                    BorderSide(color: AppColors.textFieldStroke, width: 2),
+                borderSide: BorderSide(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors
+                          .textFieldStroke
+                      : AppColors
+                          .descriptionTextColor,
+                  width: 2,
+                ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide:
-                    BorderSide(color: AppColors.textFieldStroke, width: 2),
+                borderSide: BorderSide(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors
+                          .textFieldStroke
+                      : AppColors
+                          .descriptionTextColor,
+                  width: 2,
+                ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide:
-                    BorderSide(color: AppColors.textFieldStroke, width: 2),
+                borderSide: BorderSide(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors
+                          .textFieldStroke
+                      : AppColors
+                          .descriptionTextColor,
+                  width: 2,
+                ),
               ),
             ),
           ),

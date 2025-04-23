@@ -1,6 +1,6 @@
-import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/widgets/text/top-text.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../services/content/content-services.dart';
@@ -15,14 +15,22 @@ class ProjectProposal extends StatelessWidget {
     final contentServices = Provider.of<ContentServices>(context);
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Ionicons.chevron_back_outline),
+        ),
+        leadingWidth: 80,
+      ),
       body: Padding(
         padding: Responsive.responsivePadding(context),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: Responsive.blockSizeVertical(context) * 7),
               TopText(text: "Yapılabilecek Projeler"),
               SizedBox(height: Responsive.blockSizeVertical(context) * 5),
               Center(
@@ -30,7 +38,7 @@ class ProjectProposal extends StatelessWidget {
                   contentServices.updatedResultList.isNotEmpty
                       ? "Mevcut malzemeler: ${contentServices.updatedResultList.join(', ')}"
                       : "Malzeme listesi boş.",
-                  style: TextStyle(color: AppColors.secondaryColor,fontWeight: FontWeight.w500),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,fontWeight: FontWeight.w500),
                 ),
               ),
           

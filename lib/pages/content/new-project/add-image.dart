@@ -8,6 +8,7 @@ import 'package:circuit_recognition/widgets/text/top-text.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -35,25 +36,24 @@ class _NewProjectState extends State<AddImage> {
   }
 
 void goResult() async {
-  aiServices.setIsResultNotGet(true);
-
-  if(aiServices.isResultNotGet)
-  {
+  if (aiServices.imageUrl.isEmpty) {
     QuickAlert.show(
-    context: context,
-    type: QuickAlertType.loading,
-    title: 'Yükleniyor...',
-    text: 'Lütfen bekleyin',
-    barrierDismissible: false,
-  );
-  }
-  if(aiServices.imageUrl=="")
-  {
-      QuickAlert.show(
       context: context,
       type: QuickAlertType.error,
       title: 'Hata!',
       text: 'Resim urlsi alınamadı',
+    );
+    return; // imageUrl boşsa işlemi durdur
+  }
+
+  aiServices.setIsResultNotGet(true);
+  if (aiServices.isResultNotGet) {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.loading,
+      title: 'Yükleniyor...',
+      text: 'Lütfen bekleyin',
+      barrierDismissible: false,
     );
   }
 
@@ -67,7 +67,7 @@ void goResult() async {
       builder: (context) => Result(resultList: result),
     ),
   );
-  
+
   aiServices.setIsResultNotGet(false);
 }
 
@@ -88,13 +88,21 @@ void goResult() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Ionicons.chevron_back_outline),
+        ),
+        leadingWidth: 80,
+      ),
       body: Padding(
         padding: Responsive.responsivePadding(context),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: Responsive.blockSizeVertical(context) * 10),
             TopText(text: "Malzemeleri Belirleyelim"),
             SizedBox(height: Responsive.blockSizeVertical(context) * 7),
             Consumer<AiServices>(

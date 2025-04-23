@@ -44,6 +44,12 @@ class ContentServices extends ChangeNotifier {
 
     final validItems =
         updatedResultList.isNotEmpty ? updatedResultList : resultList;
+
+    if (validItems.isEmpty) {
+      print("Uyarı: Malzeme listesi boş, öneri üretilemez.");
+      return null;
+    }
+
     final itemsAsString = validItems.join(", ");
 
     final prompt = '''
@@ -92,7 +98,6 @@ Malzemeler: $itemsAsString
         throw Exception("API'den geçerli içerik gelmedi!");
       }
 
-      // 🔍 Proje önerilerini ayrıştır (regex yok, satır satır)
       projectProposals.clear();
       final lines = content.split('\n');
       String? currentTitle;

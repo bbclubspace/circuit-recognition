@@ -2,9 +2,9 @@ import 'package:circuit_recognition/services/ai/project/project-services.dart';
 import 'package:circuit_recognition/widgets/button/go-next-button.dart';
 import 'package:circuit_recognition/widgets/textfield/custom-textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
-import '../../../themes/themes.dart';
 import '../../../utils/responsive.dart';
 import '../../../widgets/text/top-text.dart';
 
@@ -63,13 +63,21 @@ class _SaveProjectState extends State<SaveProject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Ionicons.chevron_back_outline),
+        ),
+        leadingWidth: 80,
+      ),
       body: Padding(
         padding: Responsive.responsivePadding(context),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: Responsive.blockSizeVertical(context) * 7),
             //toptext
             TopText(text: "Yeni proje ekle"),
             SizedBox(height: Responsive.blockSizeVertical(context) * 7),
@@ -78,7 +86,7 @@ class _SaveProjectState extends State<SaveProject> {
               child: Text(
                 "Proje ismi",
                 style: TextStyle(
-                    color: AppColors.textColor,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.bold,
                     fontSize: 18),
               ),
@@ -98,7 +106,7 @@ class _SaveProjectState extends State<SaveProject> {
               child: Text(
                 "Açıklama",
                 style: TextStyle(
-                    color: AppColors.textColor,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.bold,
                     fontSize: 18),
               ),

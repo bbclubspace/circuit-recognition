@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../themes/themes.dart';
 import '../../utils/responsive.dart';
 
 class ProjectTextAndImage extends StatelessWidget {
@@ -16,7 +14,7 @@ class ProjectTextAndImage extends StatelessWidget {
       children: [
         Image.asset(image,height: 50,width: 50,),
         SizedBox(width: Responsive.blockSizeHorizontal(context) * 5),
-        Text(text,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.bold),),
+        Text(text,style: TextStyle(color:Theme.of(context).colorScheme.onPrimary,fontWeight: FontWeight.bold),),
       ],
     );
   }

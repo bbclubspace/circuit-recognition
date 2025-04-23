@@ -1,4 +1,3 @@
-import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,7 @@ class WelcomeText extends StatelessWidget {
     return Text(
       "Hoşgeldin, $name",
       style: TextStyle(
-        color: AppColors.textColor,
+        color: Theme.of(context).colorScheme.onPrimary,
         fontSize: Responsive.textSize(context, 7),
         fontWeight: FontWeight.bold,
       ),

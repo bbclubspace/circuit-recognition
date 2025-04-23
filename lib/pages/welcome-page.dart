@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
-import 'package:circuit_recognition/themes/themes.dart';
 import 'package:circuit_recognition/widgets/button/next-button.dart';
 import 'package:circuit_recognition/widgets/onboarding/description-text.dart';
 import 'package:circuit_recognition/widgets/onboarding/onboarding-image.dart';
 import 'package:circuit_recognition/widgets/text/top-text.dart';
 import 'package:flutter/material.dart';
+
+import '../themes/themes.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.secondaryColor,
+            backgroundColor: AppColors.secondaryColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

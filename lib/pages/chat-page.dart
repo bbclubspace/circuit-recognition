@@ -1,6 +1,6 @@
 import 'package:circuit_recognition/services/ai/ai-chat-services.dart';
-import 'package:circuit_recognition/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -18,7 +18,7 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
-  @override
+@override
 void initState() {
   super.initState();
   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -31,6 +31,7 @@ void initState() {
     );
   });
 }
+
   void scrollDown({bool animated = true}) {
     if (_scrollController.hasClients) {
       final position = _scrollController.position.maxScrollExtent;
@@ -62,7 +63,16 @@ void initState() {
     });
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Ionicons.chevron_back_outline),
+        ),
+        leadingWidth: 50,
+      ),
       body: Column(
         children: [
           // Logo gibi görseller burada eklenebilir

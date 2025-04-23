@@ -57,49 +57,52 @@ class CreateAccountProvider with ChangeNotifier {
     }
   }
 
-  Future<void> signInWithGoogle(BuildContext context) async {
-    try {
-      final GoogleSignInAccount? gUser = await _googleSignIn.signIn();
-      if (gUser == null) {
-        return;
-      }
+  Future<User?> signInWithGoogle(BuildContext context) async {
+  try {
+    final GoogleSignInAccount? gUser = await _googleSignIn.signIn();
+    if (gUser == null) return null;
 
-      final GoogleSignInAuthentication gAuth = await gUser.authentication;
+    final GoogleSignInAuthentication gAuth = await gUser.authentication;
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: gAuth.accessToken,
-        idToken: gAuth.idToken,
-      );
+    final credential = GoogleAuthProvider.credential(
+      accessToken: gAuth.accessToken,
+      idToken: gAuth.idToken,
+    );
 
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
+    UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
 
-      _user = userCredential.user;
-      if (_user != null) {
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+    _user = userCredential.user;
+
+    if (_user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_user!.uid)
+          .get();
+
+      if (!userDoc.exists) {
+        await FirebaseFirestore.instance
             .collection('users')
             .doc(_user!.uid)
-            .get();
-
-        if (!userDoc.exists) {
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(_user!.uid)
-              .set({
-            'email': _user!.email,
-            'name': _user!.displayName,
-            'surname': _user!.displayName != null &&
-                    _user!.displayName!.split(' ').length > 1
-                ? _user!.displayName!.split(' ').sublist(1).join(' ')
-                : '',
-          });
-        }
+            .set({
+          'email': _user!.email,
+          'name': _user!.displayName,
+          'surname': _user!.displayName != null &&
+                  _user!.displayName!.split(' ').length > 1
+              ? _user!.displayName!.split(' ').sublist(1).join(' ')
+              : '',
+        });
       }
-      notifyListeners();
-    } catch (e) {
-      print("Google Sign-In failed: ${e.toString()}");
     }
+
+    notifyListeners();
+    return _user;
+  } catch (e) {
+    print("Google Sign-In failed: ${e.toString()}");
+    return null;
   }
+}
+
 
   Future<void> signOut() async {
     await _googleSignIn.signOut();

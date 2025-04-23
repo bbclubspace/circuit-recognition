@@ -30,21 +30,25 @@ class SignupPage extends StatelessWidget {
       String emailValue = emailController.text;
       String passwordValue = passWordController.text;
       String retryPasswordValue = retryPassWordController.text;
+
+      String? errorMessage;
+      QuickAlertType alertType = QuickAlertType.error;
+
       if (emailValue.isEmpty || passwordValue.isEmpty) {
-        QuickAlert.show(
-          context: context,
-          type: QuickAlertType.warning,
-          title: 'Eksik bilgi',
-          text: 'Lütfen e-posta ve şifre giriniz',
-        );
-        return;
+        errorMessage = 'Lütfen e-posta ve şifre giriniz';
+        alertType = QuickAlertType.warning;
+      } else if (passwordValue.length < 8) {
+        errorMessage = 'Şifre en az 8 karakter olmalıdır!';
+      } else if (passwordValue != retryPasswordValue) {
+        errorMessage = 'Şifreler eşleşmiyor!';
       }
-      if (passwordValue != retryPasswordValue && passwordValue.length < 8) {
+
+      if (errorMessage != null) {
         QuickAlert.show(
           context: context,
-          type: QuickAlertType.error,
-          title: 'Hata!',
-          text: 'Şifreler eşleşmiyor veya şifre 8 karakterden kısa!',
+          type: alertType,
+          title: 'Hata',
+          text: errorMessage,
         );
         return;
       }
@@ -55,6 +59,7 @@ class SignupPage extends StatelessWidget {
         text: 'Lütfen bekleyin',
         barrierDismissible: false,
       );
+
       await Future.delayed(const Duration(seconds: 1));
 
       User? user = await authProvider.signUpWithEmail(
@@ -68,20 +73,23 @@ class SignupPage extends StatelessWidget {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.success,
-          title: 'Başarılı...',
+          title: 'Başarılı',
           text: 'Anasayfaya yönlendiriliyorsunuz',
           showConfirmBtn: false,
         );
-
-        Future.delayed(Duration(seconds: 2), () {
-          Navigator.pushNamed(context, "/login");
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            "/home",
+            (Route<dynamic> route) => false,
+          );
         });
       } else {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
-          title: 'Hata!',
-          text: 'Giriş işlemi başarısız!',
+          title: 'Kayıt Başarısız',
+          text: 'Kayıt işlemi sırasında bir hata oluştu!',
         );
       }
     }
@@ -120,7 +128,7 @@ class SignupPage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 25),

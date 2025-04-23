@@ -1,6 +1,7 @@
 import 'package:circuit_recognition/services/ai/project/project-services.dart';
 import 'package:circuit_recognition/widgets/container/content-container.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../../themes/themes.dart';
@@ -41,7 +42,16 @@ class _MyProjectState extends State<MyProject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Ionicons.chevron_back_outline),
+        ),
+        leadingWidth: 80,
+      ),
       body: Padding(
         padding: Responsive.responsivePadding(context),
         child: isLoading
@@ -52,7 +62,6 @@ class _MyProjectState extends State<MyProject> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: Responsive.blockSizeVertical(context) * 7),
                   TopText(text: "Projelerim"),
                   SizedBox(height: Responsive.blockSizeVertical(context) * 5),
                   latestProject != null
@@ -69,7 +78,7 @@ class _MyProjectState extends State<MyProject> {
                               latestProject!['projectName'] ?? 'Proje ismi yok',
                         )
                       : Text("Henüz proje eklenmemiş",
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
                   SizedBox(height: Responsive.blockSizeVertical(context) * 3),
                   Expanded(
                     child: ListView.builder(
