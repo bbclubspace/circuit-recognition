@@ -14,6 +14,7 @@ import 'package:circuit_recognition/services/ai/ai-services.dart';
 import 'package:circuit_recognition/services/ai/project/project-services.dart';
 import 'package:circuit_recognition/services/content/content-services.dart';
 import 'package:circuit_recognition/themes/theme-provider.dart';
+import 'package:circuit_recognition/themes/themes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -57,7 +58,9 @@ class MainApp extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const MaterialApp(
+            debugShowCheckedModeBanner: false,
             home: Scaffold(
+              backgroundColor: AppColors.primaryColor,
               body: Center(child: CircularProgressIndicator()),
             ),
           );

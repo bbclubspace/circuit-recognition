@@ -63,6 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1017112900413',
     projectId: 'circuitrecognition-da847',
     storageBucket: 'circuitrecognition-da847.firebasestorage.app',
-    iosBundleId: 'com.example.circuitRecognition',
+    iosBundleId: 'com.bbclub.circuitRecognition',
   );
 }

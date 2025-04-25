@@ -77,7 +77,7 @@ class ContentContainer extends StatelessWidget {
                     image,
                     width: 60,
                     height: 60,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                   ),
             Center(
               child: Text(

@@ -8,7 +8,7 @@
 PRODUCT_NAME = circuit_recognition
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.circuitRecognition
+PRODUCT_BUNDLE_IDENTIFIER = com.bbclub.circuitRecognition
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2025 com.bbclub. All rights reserved.

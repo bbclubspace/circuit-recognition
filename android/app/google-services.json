@@ -7,12 +7,41 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1017112900413:android:b03a16bb3c377aa61e8b54",
+        "mobilesdk_app_id": "1:1017112900413:android:7ca8f095f85aebbe1e8b54",
         "android_client_info": {
-          "package_name": "com.example.circuit_recognition"
+          "package_name": "com.bbclub.circuit_recognition"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1017112900413-51jk10hht0h6212bjv6mc4egp4dn4ua9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbclub.circuit_recognition",
+            "certificate_hash": "707af5fccbe4d61765bd87fe88c1e618210a0d49"
+          }
+        },
+        {
+          "client_id": "1017112900413-o2rp6ulcke5tfse0c1ou7lnbia6rnh00.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbclub.circuit_recognition",
+            "certificate_hash": "2b56929b6fb471c4ba6ca7e1dc878efab5edeccc"
+          }
+        },
+        {
+          "client_id": "1017112900413-v4knda77dcjnp5nm49btcdf6pv94mp16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbclub.circuit_recognition",
+            "certificate_hash": "6e2aa34c873b986a28d4ec47d4519d27f406f5e5"
+          }
+        },
+        {
+          "client_id": "1017112900413-m4o3213j09tnc3s5l28t0eltkq4qtpv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCVekqAvz6U5s8PXI3hqJYXs-inbERQj8s"
@@ -20,7 +49,79 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017112900413-m4o3213j09tnc3s5l28t0eltkq4qtpv4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1017112900413-pbtga04hq2fqjiec2i914nnov6p06kjd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.circuitRecognition"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017112900413:android:b03a16bb3c377aa61e8b54",
+        "android_client_info": {
+          "package_name": "com.example.circuit_recognition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017112900413-2q9djrq4hf1cn2bmrq4pk4po47861s31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.circuit_recognition",
+            "certificate_hash": "6e2aa34c873b986a28d4ec47d4519d27f406f5e5"
+          }
+        },
+        {
+          "client_id": "1017112900413-c38saed51je2j94e861g36l8e4ab2r3n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.circuit_recognition",
+            "certificate_hash": "707af5fccbe4d61765bd87fe88c1e618210a0d49"
+          }
+        },
+        {
+          "client_id": "1017112900413-cgupaafm6a7tvlq8fngil7ql2dnoks71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.circuit_recognition",
+            "certificate_hash": "2b56929b6fb471c4ba6ca7e1dc878efab5edeccc"
+          }
+        },
+        {
+          "client_id": "1017112900413-m4o3213j09tnc3s5l28t0eltkq4qtpv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVekqAvz6U5s8PXI3hqJYXs-inbERQj8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017112900413-m4o3213j09tnc3s5l28t0eltkq4qtpv4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1017112900413-pbtga04hq2fqjiec2i914nnov6p06kjd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.circuitRecognition"
+              }
+            }
+          ]
         }
       }
     }
