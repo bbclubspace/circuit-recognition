@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../themes/themes.dart';
 import '../../utils/responsive.dart';
 
@@ -11,6 +10,7 @@ class ContentContainer extends StatelessWidget {
   final String image;
   final String contentText;
   final bool isNewProjectContainer;
+  final bool? isLoading;
 
   final Color? strokeTopColor;
   final double? strokeTopWidth;
@@ -40,13 +40,14 @@ class ContentContainer extends StatelessWidget {
     this.strokeRightColor,
     this.strokeRightWidth,
     this.onTap,
+    this.isLoading,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onTap!(),
+      onTap: () => onTap?.call(),
       child: Container(
         height: Responsive.containerHeight(context, heightPercentage),
         width: Responsive.containerWidth(context, widthPercentage),
@@ -66,19 +67,34 @@ class ContentContainer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isNetworkImage
-                ? Image.network(
-                    image,
-                    width: 250,
-                    height: 250,
-                    fit: BoxFit.contain,
-                  )
-                : Image.asset(
-                    image,
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                  ),
+            if (isLoading == true)
+              const CircularProgressIndicator()
+            else if (isNetworkImage)
+              // Burada ağ üzerinden resim yüklemek için Image.network kullanıyoruz
+              Image.network(
+                image, // Ağ adresi (URL) burada olacak
+                width: 250,
+                height: 250,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.error, color: Colors.red);
+                },
+              )
+            else
+              Image.asset(
+                image,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            const SizedBox(height: 8),
             Center(
               child: Text(
                 contentText,

@@ -32,6 +32,13 @@ void initState() {
   });
 }
 
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void scrollDown({bool animated = true}) {
     if (_scrollController.hasClients) {
       final position = _scrollController.position.maxScrollExtent;
@@ -47,12 +54,7 @@ void initState() {
     }
   }
 
-  @override
-  void dispose() {
-    _messageController.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -26,6 +26,12 @@ class _SaveProjectState extends State<SaveProject> {
     super.initState();
     projectServices = Provider.of<ProjectServices>(context, listen: false);
   }
+  @override
+  void dispose() {
+    projectNameController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
 
   void saveData() async {
     if (projectNameController.text.isEmpty ||

@@ -28,10 +28,8 @@ class CustomTextField extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               color: Theme.of(context).brightness == Brightness.light
-                  ? AppColors
-                      .textFieldStroke
-                  : AppColors
-                      .descriptionTextColor,
+                  ? AppColors.textFieldStroke
+                  : AppColors.descriptionTextColor,
             )),
         SizedBox(height: 5),
         SizedBox(
@@ -39,6 +37,11 @@ class CustomTextField extends StatelessWidget {
           width: width, //authda 348 olacak
           child: TextField(
             controller: controller,
+            minLines: 3, // Başlangıçta 3 satır
+            maxLines: null, // Satır sayısı kadar uzasın
+            cursorColor: Theme.of(context).brightness == Brightness.light
+                ? AppColors.textFieldStroke
+                : AppColors.descriptionTextColor,
             decoration: InputDecoration(
               suffixIcon: (issubFixIcon ?? false) && subFixIconPath != null
                   ? Padding(
@@ -50,16 +53,13 @@ class CustomTextField extends StatelessWidget {
                       ),
                     )
                   : const SizedBox(),
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: height / 4, horizontal: 12),
+              contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
                   color: Theme.of(context).brightness == Brightness.light
-                      ? AppColors
-                          .textFieldStroke
-                      : AppColors
-                          .descriptionTextColor,
+                      ? AppColors.textFieldStroke
+                      : AppColors.descriptionTextColor,
                   width: 2,
                 ),
               ),
@@ -67,10 +67,8 @@ class CustomTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
                   color: Theme.of(context).brightness == Brightness.light
-                      ? AppColors
-                          .textFieldStroke
-                      : AppColors
-                          .descriptionTextColor,
+                      ? AppColors.textFieldStroke
+                      : AppColors.descriptionTextColor,
                   width: 2,
                 ),
               ),
@@ -78,10 +76,8 @@ class CustomTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
                   color: Theme.of(context).brightness == Brightness.light
-                      ? AppColors
-                          .textFieldStroke
-                      : AppColors
-                          .descriptionTextColor,
+                      ? AppColors.textFieldStroke
+                      : AppColors.descriptionTextColor,
                   width: 2,
                 ),
               ),

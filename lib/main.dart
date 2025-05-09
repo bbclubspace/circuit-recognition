@@ -31,21 +31,23 @@ void main() async {
   print("Firebase is started");
   await dotenv.load(fileName: ".env");
   print("Env ortamı başlatıldı");
+
+  final brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CreateAccountProvider()),
-        ChangeNotifierProvider(create: (_)=>AiServices()),
-        ChangeNotifierProvider(create: (_)=>AiChatServices()),
+        ChangeNotifierProvider(create: (_) => AiServices()),
+        ChangeNotifierProvider(create: (_) => AiChatServices()),
         ChangeNotifierProvider(create: (_) => ContentServices()),
-        ChangeNotifierProvider(create: (_)=>ProjectServices()),
-        ChangeNotifierProvider(create: (_)=>ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => ProjectServices()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider(brightness: brightness)),
       ],
-      child: MainApp(),
+      child: const MainApp(),
     ),
   );
 }
-
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 

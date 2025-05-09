@@ -13,45 +13,46 @@ class ChatBuble extends StatelessWidget {
     required this.isUserInput,
     this.message,
     required this.isLoading,
-
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment:
-          isUserInput ? MainAxisAlignment.end : MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        // Kullanıcı değilse ve loading varsa avatar + lottie göster
-        if (!isUserInput)
-          Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Row(
-              children: [
-                Lottie.asset(
-                  "assets/lottie.json",
-                  width: 60,
-                  height: 60,
-                  repeat: false,
-                ),
-                if (isLoading)
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment:
+            isUserInput ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          if (!isUserInput)
+            Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: Column(
+                children: [
                   Lottie.asset(
-                    "assets/loading.json",
-                    width: 100,
-                    height: 100,
+                    "assets/lottie.json",
+                    width: 60,
+                    height: 60,
+                    repeat: false,
                   ),
-              ],
+                  if (isLoading)
+                    Lottie.asset(
+                      "assets/loading.json",
+                      width: 60,
+                      height: 60,
+                    ),
+                ],
+              ),
             ),
-          ),
 
-        // Chat baloncuğu
-        if (isUserInput || !isLoading)
           Flexible(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 5),
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.7,
+              ),
+              margin: const EdgeInsets.symmetric(vertical: 2), // minimize spacing
               child: BubbleSpecialOne(
-                text: message ?? "",
+                text: message?.trim() ?? "",
                 isSender: isUserInput,
                 color: isUserInput
                     ? AppColors.chatBubleUser
@@ -61,6 +62,7 @@ class ChatBuble extends StatelessWidget {
                       ? AppColors.chatBubleUserText
                       : AppColors.chatBubleAiText,
                   fontSize: 15,
+                  height: 1.2, // satır yüksekliği azaltıldı
                 ),
                 tail: true,
                 seen: false,
@@ -70,17 +72,17 @@ class ChatBuble extends StatelessWidget {
             ),
           ),
 
-        // Kullanıcı ise: sağda avatar göster
-        if (isUserInput)
-          Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Image.asset(
-              "assets/working.png",
-              width: 50,
-              height: 50
+          if (isUserInput)
+            Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Image.asset(
+                "assets/working.png",
+                width: 60,
+                height: 60,
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -35,42 +35,41 @@ class _NewProjectState extends State<AddImage> {
     aiServices = Provider.of<AiServices>(context, listen: false);
   }
 
-void goResult() async {
-  if (aiServices.imageUrl.isEmpty) {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.error,
-      title: 'Hata!',
-      text: 'Resim urlsi alınamadı',
+  void goResult() async {
+    if (aiServices.imageUrl.isEmpty) {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        title: 'Hata!',
+        text: 'Resim urlsi alınamadı',
+      );
+      return; // imageUrl boşsa işlemi durdur
+    }
+
+    aiServices.setIsResultNotGet(true);
+    if (aiServices.isResultNotGet) {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.loading,
+        title: 'Yükleniyor...',
+        text: 'Lütfen bekleyin',
+        barrierDismissible: false,
+      );
+    }
+
+    final resultData = await aiServices.uploadImageAi();
+    result.clear();
+    result.addAll(resultData);
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Result(resultList: result),
+      ),
     );
-    return; // imageUrl boşsa işlemi durdur
+
+    aiServices.setIsResultNotGet(false);
   }
-
-  aiServices.setIsResultNotGet(true);
-  if (aiServices.isResultNotGet) {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.loading,
-      title: 'Yükleniyor...',
-      text: 'Lütfen bekleyin',
-      barrierDismissible: false,
-    );
-  }
-
-  final resultData = await aiServices.uploadImageAi();
-  result.clear();
-  result.addAll(resultData);
-  Navigator.pop(context);
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => Result(resultList: result),
-    ),
-  );
-
-  aiServices.setIsResultNotGet(false);
-}
-
 
   Future<void> pickImage() async {
     result.clear();
@@ -88,8 +87,8 @@ void goResult() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            appBar: AppBar(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -107,6 +106,8 @@ void goResult() async {
             SizedBox(height: Responsive.blockSizeVertical(context) * 7),
             Consumer<AiServices>(
               builder: (context, aiServices, _) {
+                final isNetwork = aiServices.imageUrl.startsWith('http');
+
                 return ContentContainer(
                   heightPercentage: 35,
                   widthPercentage: 85,
@@ -114,16 +115,14 @@ void goResult() async {
                   strokeTopColor: AppColors.secondStrokeColor,
                   strokeTopWidth: 1.5,
                   isNewProjectContainer: true,
-                  image: aiServices.isImageUrl
-                      ? aiServices.imageUrl
-                      : "assets/photo.png",
-                  isNetworkImage: aiServices.isImageUrl,
+                  image: isNetwork ? aiServices.imageUrl : "assets/photo.png",
+                  isNetworkImage: isNetwork,
+                  isLoading: aiServices.isLoading,
                   contentText: 'Görsel ekle',
                   onTap: pickImage,
                 );
               },
             ),
-
             SizedBox(height: Responsive.blockSizeVertical(context) * 20),
             GoNextButton(
               onTap: goResult,

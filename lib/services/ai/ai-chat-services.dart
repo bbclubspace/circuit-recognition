@@ -26,7 +26,6 @@ class AiChatServices with ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> sendMessage(String userMessage) async {
     addUserMessage(userMessage);
     addLoadingMessage();
@@ -57,7 +56,13 @@ class AiChatServices with ChangeNotifier {
           "messages": [
             {
               "role": "user",
-              "content":"Bu soruyu kısaca cevapla:$userMessage",
+              "content": """
+Aşağıdaki kullanıcı mesajını değerlendir:
+- Eğer mesaj donanım cihazlarıyla (örneğin: bilgisayar parçaları, elektronik bileşenler, sensörler, mikrodenetleyiciler, işlemciler, devre kartları vb.) ilgiliyse, teknik ama kısa ve açıklayıcı bir şekilde yanıtla.
+- Eğer mesaj donanımla ilgili değilse, sadece şu yanıtı ver: 'Cevabınız donanım cihazlarıyla ilgili olmadığı için yanıt veremem.'
+
+Mesaj: $userMessage
+"""
             }
           ],
         }),
