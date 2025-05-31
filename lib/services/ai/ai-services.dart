@@ -45,6 +45,13 @@ class AiServices with ChangeNotifier {
 
   Future<List<String>> fetchAIWithImage(String imageUrl) async {
     final apiKey = dotenv.env['OPENROUTER_API_KEY'];
+    // Prompt'u .env'den al
+    final imagePromptTemplate = dotenv.env['AI_IMAGE_PROMPT'];
+    if (imagePromptTemplate == null || imagePromptTemplate.isEmpty) {
+      throw Exception("Görsel promptu eksik!");
+    }
+    // Model adını .env'den al
+    final imageModelName = dotenv.env['AI_IMAGE_MODEL'] ?? "meta-llama/llama-4-maverick:free";
     try {
       final response = await http.post(
         Uri.parse("https://openrouter.ai/api/v1/chat/completions"),
@@ -53,15 +60,14 @@ class AiServices with ChangeNotifier {
           "Content-Type": "application/json",
         },
         body: jsonEncode({
-          "model": "meta-llama/llama-4-maverick:free",
+          "model": imageModelName,
           "messages": [
             {
               "role": "user",
               "content": [
                 {
                   "type": "text",
-                  "text":
-                      "Bu görselde aşağıdaki listedeki elemanlardan hangileri var? Lütfen sadece listede geçen ifadeleri cevap olarak ver:\n\n${deviceKeywords.keys.join(', ')}"
+                  "text": imagePromptTemplate.replaceAll(r'${deviceList}', deviceKeywords.keys.join(', '))
                 },
                 {
                   "type": "image_url",

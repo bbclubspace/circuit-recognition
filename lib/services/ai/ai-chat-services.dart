@@ -44,6 +44,13 @@ class AiChatServices with ChangeNotifier {
       throw Exception("API anahtarı eksik!");
     }
 
+    // Prompt ve model adını .env'den al
+    final promptTemplate = dotenv.env['AI_CHAT_PROMPT'];
+    if (promptTemplate == null || promptTemplate.isEmpty) {
+      throw Exception("Prompt eksik!");
+    }
+    final modelName = dotenv.env['AI_CHAT_MODEL'] ?? "google/gemma-3-12b-it:free";
+
     try {
       final response = await http.post(
         Uri.parse("https://openrouter.ai/api/v1/chat/completions"),
@@ -52,17 +59,11 @@ class AiChatServices with ChangeNotifier {
           "Content-Type": "application/json",
         },
         body: jsonEncode({
-          "model": "google/gemma-3-12b-it:free",
+          "model": modelName,
           "messages": [
             {
               "role": "user",
-              "content": """
-Aşağıdaki kullanıcı mesajını değerlendir:
-- Eğer mesaj donanım cihazlarıyla (örneğin: bilgisayar parçaları, elektronik bileşenler, sensörler, mikrodenetleyiciler, işlemciler, devre kartları vb.) ilgiliyse, teknik ama kısa ve açıklayıcı bir şekilde yanıtla.
-- Eğer mesaj donanımla ilgili değilse, sadece şu yanıtı ver: 'Cevabınız donanım cihazlarıyla ilgili olmadığı için yanıt veremem.'
-
-Mesaj: $userMessage
-"""
+              "content": promptTemplate.replaceAll(r'${userMessage}', userMessage)
             }
           ],
         }),
